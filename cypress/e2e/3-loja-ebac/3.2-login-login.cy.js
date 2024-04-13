@@ -1,4 +1,5 @@
 /// <reference types="cypress"/>
+const perfil = require('../../fixtures/perfil.json')
 
 describe('Funcionalidade: Login', () => {
 
@@ -9,7 +10,7 @@ describe('Funcionalidade: Login', () => {
     afterEach(() => {
         cy.screenshot()
     }); 
-
+    // Verificando login
     it('Acessar a página de Login', () => {
 
         cy.get('#username').type("ericdouglasffaria@hotmail.com.br")
@@ -18,6 +19,7 @@ describe('Funcionalidade: Login', () => {
         cy.get('.woocommerce-MyAccount-content > :nth-child(2)').should("contain","Olá, ericdouglasffaria (não é ericdouglasffaria?")
     });
 
+    // Verificando mensagem de erro usuário invalido
     it('Deve exibir uma mensagame de erro ao inserir Usuário Invalido', () => {
 
         cy.get('#username').type("ericdouglas@hotmail.com.br")
@@ -29,6 +31,7 @@ describe('Funcionalidade: Login', () => {
         cy.get('.woocommerce-error').should("exist")
     });
 
+        // Verificando mensagem de erro senha invalido
     it('Deve exibir uma mensagame de erro ao inserir senha Invalido', () => {
 
         cy.get('#username').type("ericdouglasffaria@hotmail.com.br")
@@ -38,5 +41,21 @@ describe('Funcionalidade: Login', () => {
         //Validando da mensagem de erro.
         cy.get('.woocommerce-error').should("contain","Erro: A senha fornecida para o e-mail ericdouglasffaria@hotmail.com.br está incorreta.")
         cy.get('.woocommerce-error').should("exist")
+    });
+        //Validando login usando massa de dados
+    it('Deve fazer o login com sucesso realizando massa de dados.', () => {
+        cy.get('#username').type(perfil.usuario)
+        cy.get('#password').type(perfil.senha)
+        cy.get('.woocommerce-form > .button').click()
+        cy.get('.woocommerce-MyAccount-content > :nth-child(2)').should("contain","Olá, ericdouglasffaria (não é ericdouglasffaria?")
+    });
+        //Validando login Usando - Fixture
+    it('Deve fazer o login com sucesso - usando Fixture.', () => {
+        cy.fixture('perfil').then(dados => {
+            cy.get('#username').type(dados.usuario, {log:false})
+            cy.get('#password').type(dados.senha,{log:false})
+            cy.get('.woocommerce-form > .button').click()
+            cy.get('.woocommerce-MyAccount-content > :nth-child(2)').should("contain","Olá, ericdouglasffaria (não é ericdouglasffaria?")
+        });
     });
 });

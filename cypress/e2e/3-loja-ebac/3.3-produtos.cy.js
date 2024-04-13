@@ -3,9 +3,11 @@
 describe('Funcionalidade: Produtos', () => {
 
     beforeEach(() => {
-        cy.visit('http://lojaebac.ebaconline.art.br/produtos/')
+        cy.visit('produtos/')
     });
 
     it('Deve selecionar um produtos na lista', () => {
+        cy.get('.products > .row').contains('Frankie Sweatshirt').click()
+        cy.get
     });
 });

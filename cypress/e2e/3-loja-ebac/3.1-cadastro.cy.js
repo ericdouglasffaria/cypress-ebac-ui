@@ -6,7 +6,7 @@ describe('Funcionalidade: Cadastro', () => {
     beforeEach(() => {
         cy.visit("minha-conta/")
     });
-
+    // Verificando criação de cadastro via faker
     it('Deve completar um Cadastro Com Sucesso.', () => {
         cy.get('#reg_email').type(faker.internet.email())
         cy.get('#reg_password').type("123456")
