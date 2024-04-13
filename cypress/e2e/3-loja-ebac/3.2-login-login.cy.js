@@ -12,7 +12,6 @@ describe('Funcionalidade: Login', () => {
     }); 
     // Verificando login
     it('Acessar a página de Login', () => {
-
         cy.get('#username').type("ericdouglasffaria@hotmail.com.br")
         cy.get('#password').type("0123456")
         cy.get('.woocommerce-form > .button').click()
@@ -49,13 +48,18 @@ describe('Funcionalidade: Login', () => {
         cy.get('.woocommerce-form > .button').click()
         cy.get('.woocommerce-MyAccount-content > :nth-child(2)').should("contain","Olá, ericdouglasffaria (não é ericdouglasffaria?")
     });
-        //Validando login Usando - Fixture
-    it('Deve fazer o login com sucesso - usando Fixture.', () => {
+        //Validando login Usando - Usando Fixture
+    it('Deve fazer o login com sucesso - Ussando Fixture.', () => {
         cy.fixture('perfil').then(dados => {
             cy.get('#username').type(dados.usuario, {log:false})
             cy.get('#password').type(dados.senha,{log:false})
             cy.get('.woocommerce-form > .button').click()
             cy.get('.woocommerce-MyAccount-content > :nth-child(2)').should("contain","Olá, ericdouglasffaria (não é ericdouglasffaria?")
         });
+    });
+        //Validando login Usando - Usando Comando Customizados
+    it.only('Deve fazer login com sucesso - Usando Comandos Customizados', () => {
+        cy.login('ericdouglasffaria@hotmail.com.br', '0123456')
+        cy.get('.woocommerce-MyAccount-content > :nth-child(2)').should("contain","Olá, ericdouglasffaria (não é ericdouglasffaria?")
     });
 });
